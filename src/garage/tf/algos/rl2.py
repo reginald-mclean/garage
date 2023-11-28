@@ -61,11 +61,9 @@ class RL2Env(Wrapper):
                 goal-conditioned or MTRL.)
 
         """
-        first_obs, episode_info = self._env.reset()
+        (first_obs, episode_info), _ = self._env.reset()
         first_obs = np.concatenate(
-            [first_obs,
-             np.zeros(self._env.action_space.shape), [0], [0]])
-
+            [first_obs, np.zeros(4), [0], [0]])
         return first_obs, episode_info
 
     def step(self, action):

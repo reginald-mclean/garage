@@ -89,7 +89,7 @@ class NormalizedEnv(Wrapper):
         """
         if isinstance(self.action_space, akro.Box):
             # rescale the action when the bounds are not inf
-            lb, ub = self.action_space.low, self.action_space.high
+            lb, ub = np.asarray([-1., -1., -1., -1.,]), np.asarray([1., 1., 1., 1.,])
             if np.all(lb != -np.inf) and np.all(ub != -np.inf):
                 scaled_action = lb + (action + self._expected_action_scale) * (
                     0.5 * (ub - lb) / self._expected_action_scale)

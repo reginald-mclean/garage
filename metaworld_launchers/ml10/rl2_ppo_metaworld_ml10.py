@@ -2,6 +2,9 @@
 """Example script to run RL2 in ML10."""
 # pylint: disable=no-value-for-parameter
 # yapf: disable
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2,3"
 import click
 import metaworld
 import tensorflow as tf
@@ -28,8 +31,7 @@ from garage.envs import normalize
 @click.option('--seed', default=1)
 @click.option('--entropy_coefficient', type=float, default=5e-6)
 @wrap_experiment(snapshot_mode='none', name_parameters='passed')
-def rl2_ppo_metaworld_ml10(ctxt, seed, entropy_coefficient=5e-6, meta_batch_size=10, n_epochs=2000,
-                           episode_per_task=10):
+def rl2_ppo_metaworld_ml10(ctxt, seed, entropy_coefficient=5e-6, meta_batch_size=10, n_epochs=2000, episode_per_task=10):
     """Train RL2 PPO with ML10 environment.
 
     Args:

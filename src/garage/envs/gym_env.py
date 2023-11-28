@@ -4,7 +4,7 @@ import copy
 import warnings
 
 import akro
-import gym
+import gymnasium as gym
 import numpy as np
 
 from garage import Environment, EnvSpec, EnvStep, StepType
@@ -144,7 +144,7 @@ class GymEnv(Environment):
         self._max_episode_length = _get_time_limit(self._env,
                                                    max_episode_length)
 
-        self._render_modes = self._env.metadata['render.modes']
+        self._render_modes = ['rbg_array']
 
         self._step_cnt = None
         self._visualize = False
@@ -217,8 +217,8 @@ class GymEnv(Environment):
         if self._step_cnt is None:
             raise RuntimeError('reset() must be called before step()!')
 
-        observation, reward, done, info = self._env.step(action)
-
+        observation, reward, terminate, truncate, info = self._env.step(action)
+        done = np.logical_or(terminate, truncate)
         if self._visualize:
             self._env.render(mode='human')
 
